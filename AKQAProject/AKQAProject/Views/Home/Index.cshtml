@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET AKQA Test</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <label>Name : </label>
+        <input type="text" id="txtName" name="txtName" class="form-control" style="width:50%" />
+
+        <label>Amount : </label>
+        <input type="text" id="txtNumber" name="txtNumber" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="width:50%" />
+       <br />
+        <button type="button" class="btn btn-success" onclick="getString();">Get Value</button>
+        <button type="button" class="btn btn-success" onclick="clearData();">Clear</button>
+
+    </div>
+
+    <div class="col-md-4" style="border: 1px solid #f2f2f2">
+        <h2>Result</h2>
+        <label id="pResult"></label>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    function getString() {
+        var name = $('#txtName').val();
+        var number = $('#txtNumber').val();
+        $.ajax({
+            url: "/api/HomeApi/RetrunWords?name=" + name + "&&number=" + number,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                var a = JSON.stringify(data);
+                console.log(a);
+                $('#pResult').html('Name=' + name + '<br/> Number=' + data);
+                $('#pResult').css('color', 'red');
+            },
+        });
+
+    }
+    function clearData() {
+        $('#txtName').val('');
+        $('#txtNumber').val('');
+        $('#pResult').html('');
+        $('#pResult').css('color', '');
+    }
+
+  
+
+</script>
